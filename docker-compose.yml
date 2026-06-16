@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  lidar_publisher:
+    image: osrf/ros:humble-desktop
+    volumes:
+      - ./src:/av-sensor-sim/src
+      - ./data/nuscenes:/data/nuscenes
+    command: >
+      bash -c "source /opt/ros/humble/setup.bash &&
+               pip install nuscenes-devkit -q &&
+               python3 /av-sensor-sim/src/lidar_publisher.py"
+    network_mode: host
+
+  obstacle_detector:
+    image: osrf/ros:humble-desktop
+    volumes:
+      - ./src:/av-sensor-sim/src
+    command: >
+      bash -c "source /opt/ros/humble/setup.bash &&
+               python3 /av-sensor-sim/src/obstacle_detector.py"
+    network_mode: host
